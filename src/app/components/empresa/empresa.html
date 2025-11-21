@@ -1,0 +1,52 @@
+<div class="acciones">
+  <input type="text" placeholder="Buscar..." [(ngModel)]="busqueda" (input)="filtrar()"/>
+
+  <button mat-raised-button class="btn-save" style="margin: 20px;" (click)="openDialog()">
+    Registrar
+  </button>
+</div>
+
+
+<table mat-table [dataSource]="data" class="tabla-empresa">
+
+  <!-- ID -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.id}} </td>
+  </ng-container>
+
+  <!-- Nombre -->
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.nombre}} </td>
+  </ng-container>
+
+  <!-- Teléfono -->
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.telefono}} </td>
+  </ng-container>
+
+  <!-- Teléfono Respaldo -->
+  <ng-container matColumnDef="telefonoResp">
+    <th mat-header-cell *matHeaderCellDef> Teléfono Resp. </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.telefonoResp}} </td>
+  </ng-container>
+
+  <!-- Correo -->
+  <ng-container matColumnDef="correo">
+    <th mat-header-cell *matHeaderCellDef> Correo </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.correo}} </td>
+  </ng-container>
+
+  <!-- Dirección -->
+  <ng-container matColumnDef="direccion">
+    <th mat-header-cell *matHeaderCellDef> Dirección </th>
+    <td mat-cell *matCellDef="let emp"> {{emp.direccion}} </td>
+  </ng-container>
+
+  <!-- Filas -->
+  <tr mat-header-row *matHeaderRowDef="columns"></tr>
+  <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+
+</table>

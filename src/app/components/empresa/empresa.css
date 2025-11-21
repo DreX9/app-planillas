@@ -1,0 +1,38 @@
+/* Ancho completo */
+.tabla-empresa {
+    width: 100%;
+    border-collapse: collapse;
+    /* permite bordes continuos */
+    font-size: 16px;
+    /* un poco más grande */
+}
+
+/* Encabezados */
+.tabla-empresa th {
+    background: #478fd3;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    /* bordes visibles */
+    padding: 12px;
+}
+
+/* Celdas */
+.tabla-empresa td {
+    border: 1px solid #ddd;
+    /* bordes internos y externos */
+    padding: 10px;
+}
+
+/* Fila hover */
+.tabla-empresa tr:hover {
+    background: #fafafa;
+}
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+
+

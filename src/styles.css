@@ -1,4 +1,33 @@
+/* Importo los stilos de angular como este en custom-theme scss tengo que importarlo para que lo usemos de manera general  nosotros tambien sino no se aplica */
+@use './custom-theme' as *;
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Contenedor de la grilla de 12 columnas */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+/* span para ocupar N columnas */
+.span-1  { grid-column: span 1; }
+.span-2  { grid-column: span 2; }
+.span-3  { grid-column: span 3; }
+.span-4  { grid-column: span 4; }
+.span-5  { grid-column: span 5; }
+.span-6  { grid-column: span 6; }
+.span-7  { grid-column: span 7; }
+.span-8  { grid-column: span 8; }
+.span-9  { grid-column: span 9; }
+.span-10 { grid-column: span 10; }
+.span-11 { grid-column: span 11; }
+.span-12 { grid-column: span 12; }
+
+/* Color del boton Guardar o registrar */
+.btn-save {
+  background-color: #478fd3 !important;
+  color: white !important;
+}
