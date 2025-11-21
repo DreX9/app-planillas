@@ -1,5 +1,5 @@
 /* Ancho completo */
-.tabla-empresa {
+.tabla-general {
     width: 100%;
     border-collapse: collapse;
     /* permite bordes continuos */
@@ -8,7 +8,7 @@
 }
 
 /* Encabezados */
-.tabla-empresa th {
+.tabla-general th {
     background: #478fd3;
     font-weight: bold;
     border: 1px solid #ccc;
@@ -17,15 +17,21 @@
 }
 
 /* Celdas */
-.tabla-empresa td {
+.tabla-general td {
     border: 1px solid #ddd;
     /* bordes internos y externos */
     padding: 10px;
 }
+/* Responsiva tabla */
+.tabla-responsive {
+    width: 100%;
+    overflow-x: auto;            
+    -webkit-overflow-scrolling: touch; 
+}
 
 /* Fila hover */
-.tabla-empresa tr:hover {
-    background: #fafafa;
+.tabla-general tr:hover {
+    background: #f5f5f5;
 }
 .acciones {
   display: flex;
@@ -33,6 +39,44 @@
   align-items: center;
   margin-bottom: 15px;
 }
+/* boton solo para areas */
+.btn-areas {
+  background-color: #009688 !important; /* verde */
+  color: white !important;
+  padding: 4px 12px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Acciones */
+.acciones-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
 
+/* Boton de buscar de empresa */
+.input-buscar {
+  width: 260px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
 
+/* Efecto al enfocar */
+.input-buscar:focus {
+  border-color: #478fd3;
+  box-shadow: 0 0 6px rgba(71, 143, 211, 0.4);
+}
 
+/* Placeholder más suave */
+.input-buscar::placeholder {
+  color: #999;
+  font-size: 14px;
+}

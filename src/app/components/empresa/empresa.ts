@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { Router } from '@angular/router';
+
+
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +16,7 @@ import { ModalEmpresa } from '../modales/modal-empresa/modal-empresa';
 
 @Component({
   selector: 'app-empresa',
-  imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule],
+  imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule],
   templateUrl: './empresa.html',
   styleUrl: './empresa.css',
 })
@@ -27,7 +31,9 @@ export class Empresa {
     'telefono',
     'telefonoResp',
     'correo',
-    'direccion'
+    'direccion',
+    'acciones',
+    'verAreas'
   ];
 
   data = new MatTableDataSource([
@@ -68,5 +74,11 @@ export class Empresa {
       maxWidth: '80vw',   // PARA QUE NO SE ROMPA EN PANTALLAS PEQUEÑAS
       disableClose: false // opcional
     });
+  }
+  //Para ver el area
+  constructor(private router: Router) {}
+  verAreas() {
+    // Simulación → Navegación simple
+    this.router.navigate(['/area']);
   }
 }

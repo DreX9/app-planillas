@@ -10,7 +10,6 @@ import { MatIconModule } from '@angular/material/icon'
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [RouterOutlet, Header, Footer, Sidebar, MatSidenavContainer, MatSidenav, MatSidenavContent, MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
