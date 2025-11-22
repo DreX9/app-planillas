@@ -28,6 +28,7 @@ export class Empresa {
   columns: string[] = [
     'id',
     'nombre',
+    'ruc',
     'telefono',
     'telefonoResp',
     'correo',
@@ -40,6 +41,7 @@ export class Empresa {
     {
       id: 1,
       nombre: 'Empresa Solar',
+      ruc: '9873652891823',
       telefono: '987654321',
       telefonoResp: '912345678',
       correo: 'contacto@solarempresa.com',
@@ -48,6 +50,7 @@ export class Empresa {
     {
       id: 2,
       nombre: 'Negocios Rivera',
+      ruc: '1873652891822',
       telefono: '965321478',
       telefonoResp: '900112233',
       correo: 'info@rivera.pe',
