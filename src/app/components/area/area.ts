@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ModalArea } from '../modales/modal-area/modal-area';
+
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-area',
   imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule],
@@ -21,7 +23,8 @@ export class Area {
     'id',
     'nombre',
     'estado',
-    'fecha'
+    'fecha',
+    'acciones',
   ];
 
   dataArea = new MatTableDataSource([
@@ -30,6 +33,7 @@ export class Area {
       nombre: 'RR.HH',
       estado: 'Activo',
       fecha: '21/11/2025'
+      
     },
     {
       id: 2,
@@ -59,4 +63,10 @@ export class Area {
       disableClose: false // opcional
     });
   }
+  router = inject(Router);
+
+  //Boton de volver 
+  volver() {
+  this.router.navigate(['/']);
+}
 }

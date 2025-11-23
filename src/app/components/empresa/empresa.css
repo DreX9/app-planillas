@@ -80,3 +80,8 @@
   color: #999;
   font-size: 14px;
 }
+mat-dialog-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}

@@ -3,3 +3,7 @@ mat-dialog-title {
   font-weight: bold;
   margin-bottom: 16px;
 }
+
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}

@@ -1,0 +1,98 @@
+<button mat-icon-button (click)="cerrar()" style="align-self: flex-end; margin-top: 8px; margin-right: 8px;">
+    <mat-icon fontIcon="close"></mat-icon>
+</button>
+<h2 mat-dialog-title>Registrar Empleado</h2>
+
+<mat-dialog-content>
+    <h3>Datos del empleado</h3>
+
+    <!-- Fila 1: DNI + Tipo -->
+    <div class="grid-12">
+        <mat-form-field class="span-7">
+            <mat-label>Tipo de Documento</mat-label>
+            <mat-select [(ngModel)]="empleado.tipo">
+                <mat-option value="DNI">Planilla</mat-option>
+                <mat-option value="RUC">Practicante</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="span-5">
+            <mat-label>DNI</mat-label>
+            <input matInput placeholder="Documento de identidad">
+        </mat-form-field>
+    </div>
+
+    <!-- Fila 2: Nombre + Apellido -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre del empleado">
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Apellido</mat-label>
+            <input matInput placeholder="Apellido del empleado">
+        </mat-form-field>
+    </div>
+
+    <!-- Fila 3: Cargo + Área -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Cargo</mat-label>
+            <mat-select [(ngModel)]="empleado.cargo">
+                <mat-option value="DNI">Administrador</mat-option>
+                <mat-option value="RUC">Empleado</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Área</mat-label>
+            <input matInput placeholder="Área asignada">
+        </mat-form-field>
+    </div>
+
+    <!-- Fila 4: Horario + Salario -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Horaio</mat-label>
+            <mat-select [(ngModel)]="empleado.horario">
+                <mat-option value="1">Turno Mañana</mat-option>
+                <mat-option value="2">Turno Tarde</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Salario</mat-label>
+            <input type="number" matInput placeholder="Sueldo mensual">
+        </mat-form-field>
+    </div>
+
+    <!-- Fila 5: Teléfono + Correo -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Teléfono</mat-label>
+            <input matInput placeholder="Número de contacto">
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Correo</mat-label>
+            <input matInput placeholder="Correo institucional o personal">
+        </mat-form-field>
+    </div>
+
+    <!-- Fila 6: Fecha + Estado -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Estado</mat-label>
+            <mat-select [(ngModel)]="empleado.estado">
+                <mat-option value="Activo">Activo</mat-option>
+                <mat-option value="Inactivo">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions style="margin-bottom: 30px;">
+    <button mat-raised-button class="btn-save" style="margin-left: 18px;">Guardar</button>
+</mat-dialog-actions>
