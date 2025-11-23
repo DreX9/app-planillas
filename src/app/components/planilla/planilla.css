@@ -1,0 +1,130 @@
+/* Ancho completo */
+.tabla-general {
+    width: 100%;
+    border-collapse: collapse;
+    /* permite bordes continuos */
+    font-size: 16px;
+    /* un poco más grande */
+}
+
+/* Encabezados */
+.tabla-general th {
+    background: #478fd3;
+    font-weight: bold;
+    border: 1px solid #ccc;
+    /* bordes visibles */
+    padding: 12px;
+}
+
+/* Celdas */
+.tabla-general td {
+    border: 1px solid #ddd;
+    /* bordes internos y externos */
+    padding: 10px;
+}
+/* Responsiva tabla */
+.tabla-responsive {
+    width: 100%;
+    overflow-x: auto;            
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* Fila hover */
+.tabla-general tr:hover {
+    background: #f5f5f5;
+}
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+
+
+/* Boton de buscar */
+.input-buscar {
+  width: 260px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  transition: all 0.25s ease;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Efecto al enfocar */
+.input-buscar:focus {
+  border-color: #478fd3;
+  box-shadow: 0 0 6px rgba(71, 143, 211, 0.4);
+}
+
+/* Placeholder más suave */
+.input-buscar::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+/* boton solo para generar */
+.btn-generar {
+  background-color: #eba02f !important; /* verde */
+  color: white !important;
+  padding: 4px 12px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* label fuera del input le das una mejor tamano y margen  */
+.label-superior {
+  display: block;
+  font-weight: 500;   
+  margin-bottom: 6px;
+}
+
+
+/* Quitar borde con appearance="outline"
+
+<div class="span-4">
+  <label class="label-superior">Ingresar periodo</label>
+
+  <mat-form-field appearance="outline" class="no-border">
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+
+
+*/
+/* :host ::ng-deep .no-border .mat-mdc-text-field-wrapper {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .no-border .mdc-notched-outline__leading,
+:host ::ng-deep .no-border .mdc-notched-outline__notch,
+:host ::ng-deep .no-border .mdc-notched-outline__trailing {
+  border: none !important;
+} */
+
+
+
+
+/* Quitar borde pero con appearance="outline" */
+:host ::ng-deep .no-border .mat-mdc-text-field-wrapper {
+  background-color: transparent !important;   /* quita el fondo gris */
+  box-shadow: none !important;                /* quita sombra */
+}
+
+:host ::ng-deep .no-border .mdc-text-field--filled {
+  background-color: transparent !important;   /* fuerza transparencia */
+}
+
+:host ::ng-deep .no-border .mat-mdc-form-field-focus-overlay {
+  background: transparent !important;         /* quita overlay al enfocar */
+}

@@ -1,4 +1,4 @@
-import { Component , inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,57 +7,63 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
-import { ModalUsuario } from '../modales/modal-usuario/modal-usuario';
-
+import { ModalAsistencia } from '../modales/modal-asistencia/modal-asistencia';
 @Component({
-  selector: 'app-usuario',
+  selector: 'app-asistencia',
   imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule],
-  templateUrl: './usuario.html',
-  styleUrl: './usuario.css',
+  templateUrl: './asistencia.html',
+  styleUrl: './asistencia.css',
 })
-export class Usuario {
+export class Asistencia {
   busqueda = '';
   //datos de la tabla
   columns: string[] = [
     'id',
-    'usuario',
-    'contrasena',
+    'nombre',
+    'fecha',
+    'entrada',
+    'salida',
+    'estado',
     'acciones'
   ];
 
-  dataUsuario = new MatTableDataSource([
+  dataAsistencia = new MatTableDataSource([
     {
       id: 1,
-      usuario: 'Dan12',
-      contrasena: 'dTO3BjD5nY1FbKIqrgqD'
-      
+      nombre: 'Juan Perez',
+      fecha: '21/11/2025',
+      entrada: '08:00',
+      salida: '17:00',
+      estado: 'Puntual'
     },
     {
       id: 2,
-      usuario: 'Rol12',
-      contrasena: 'd34djD5nY1FbKIqrgqa'
+      nombre: 'Pablo Augusto',
+      fecha: '19/11/2025',
+      entrada: '09:00',
+      salida: '18:00',
+      estado: 'Falta'
     }
   ]);
 
 
-  dataOriginal = [...this.dataUsuario.data]; // para el buscador
+  dataOriginal = [...this.dataAsistencia.data]; // para el buscador
 
   filtrar() {
     const texto = this.busqueda.trim().toLowerCase();
 
-    this.dataUsuario.data = this.dataOriginal.filter(e =>
-      e.usuario.toLowerCase().includes(texto)
+    this.dataAsistencia.data = this.dataOriginal.filter(e =>
+      e.nombre.toLowerCase().includes(texto)
     );
   }
   //Habrir modal
   readonly dialog = inject(MatDialog);
   openDialog(): void {
-    this.dialog.open(ModalUsuario, {
+    this.dialog.open(ModalAsistencia, {
       width: '750px',
       height: 'auto',     // o '600px' si quieres fijo
       maxWidth: '80vw',   // PARA QUE NO SE ROMPA EN PANTALLAS PEQUEÑAS
       disableClose: false // opcional
     });
   }
-  
 }

@@ -67,6 +67,6 @@ export class Area {
 
   //Boton de volver 
   volver() {
-  this.router.navigate(['/']);
+  this.router.navigate(['/empresa']);
 }
 }

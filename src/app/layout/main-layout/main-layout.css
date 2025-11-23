@@ -1,0 +1,23 @@
+.content{
+  padding: 20px;
+
+}
+mat-toolbar{
+  position: relative;
+  z-index: 5;
+  gap: 30px;
+
+}
+mat-sidenav-container{
+  height: calc(100vh - 64px);
+}
+mat-toolbar h1{
+  font-size: 20px;
+  margin: 0;
+}
+
+/* Toolbar */
+/* mat-toolbar {
+  background: #1E1E2D !important;
+  color: white !important;
+} */
