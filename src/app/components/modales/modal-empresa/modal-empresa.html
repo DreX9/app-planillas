@@ -4,33 +4,41 @@
 <h2 mat-dialog-title>Registrar Empresa</h2>
 <mat-dialog-content>
   <h3>Datos de la empresa a registrar</h3>
-    <div class="grid-12">
-    <mat-form-field   class="span-7">
+  <div class="grid-12">
+    <mat-form-field class="span-7">
       <mat-label>Nombre</mat-label>
-      <input matInput placeholder="Nombre de la empresa">
+      <input matInput placeholder="Nombre de la empresa" [(ngModel)]="empresa.nombre">
     </mat-form-field>
     <mat-form-field class="span-5">
       <mat-label>RUC</mat-label>
-      <input matInput placeholder="RUC de la empresa">
+      <input matInput placeholder="RUC de la empresa" [(ngModel)]="empresa.ruc">
     </mat-form-field>
-    </div>
-    <div class="grid-12">
+  </div>
+  <div class="grid-12">
     <mat-form-field class="span-6">
       <mat-label>Correo</mat-label>
-      <input matInput placeholder="Correo de la empresa">
+      <input matInput placeholder="Correo de la empresa" [(ngModel)]="empresa.correo">
     </mat-form-field>
     <mat-form-field class="span-3">
-      <mat-label>Telefono</mat-label>
-      <input matInput placeholder="Telefono de la empresa">
+      <mat-label>Teléfono</mat-label>
+      <input matInput placeholder="Teléfono de la empresa" [(ngModel)]="empresa.telefono">
     </mat-form-field>
     <mat-form-field class="span-3">
-      <mat-label>Segundo Numero</mat-label>
-      <input matInput placeholder="Segundo Numero">
+      <mat-label>Segundo Número</mat-label>
+      <input matInput placeholder="Segundo Número" [(ngModel)]="empresa.telefono_respaldo">
     </mat-form-field>
-    </div>
-    
-  
+  </div>
+  <div class="grid-12">
+    <mat-form-field class="span-12">
+      <mat-label>Dirección</mat-label>
+      <input matInput placeholder="Dirección de la empresa" [(ngModel)]="empresa.direccion">
+    </mat-form-field>
+  </div>
+
+
 </mat-dialog-content>
 <mat-dialog-actions style="margin-bottom: 30px;">
-  <button mat-raised-button class="btn-save" style="margin-left: 18px;">Guardar</button>
+  <button mat-raised-button class="btn-save" style="margin-left: 18px;" (click)="guardar()">
+  Guardar
+</button>
 </mat-dialog-actions>

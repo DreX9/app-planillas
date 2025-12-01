@@ -12,12 +12,14 @@ import { Planilla } from './components/planilla/planilla';
 import { AsistenciaPlanilla } from './components/asistencia-planilla/asistencia-planilla';
 import { MainLayout } from './layout/main-layout/main-layout';
 import { Login } from './components/login/login';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     {path: "", component: Login, title: 'Login | App-Login'},
     {
     path: "",
     component: MainLayout,
+    canActivate: [authGuard],
     children: [
       {path: "empresa", component: Empresa, title: 'Empresa | App-Empresa'},
       {path: "usuario", component: Usuario, title: 'Usuario | App-Usuario'},

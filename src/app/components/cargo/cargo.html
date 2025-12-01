@@ -6,7 +6,14 @@
         Registrar
     </button>
 </div>
-
+<h1>Prueba</h1>
+@if(info$ | async; as info){
+    <p>
+        {{info}}
+    </p>
+}@else{
+    <p>Error al cargar</p>
+}
 <div class="tabla-responsive">
     <table mat-table [dataSource]="dataCargo" class="tabla-general">
 
