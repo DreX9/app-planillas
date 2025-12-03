@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { ModalEmpresa } from '../modales/modal-empresa/modal-empresa';
 import { EmpresaService } from '../../services/empresa/empresa';
+import { MatTable } from '@angular/material/table';
 
 
 
@@ -22,7 +23,7 @@ import { EmpresaService } from '../../services/empresa/empresa';
   styleUrl: './empresa.css',
 })
 export class Empresa {
-
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   busqueda = '';
   //datos de la tabla
@@ -52,6 +53,7 @@ export class Empresa {
       next: (empresas) => {
         this.data.data = empresas;
         this.dataOriginal = [...empresas];
+        if (this.table) this.table.renderRows();
       },
       error: (err) => console.error('Error cargando empresas', err)
     });
@@ -78,35 +80,52 @@ export class Empresa {
 
   //editar
   editar(emp: any) {
-  this.dialog.open(ModalEmpresa, {
-    width: '750px',
-    data: emp
-  })
-  .afterClosed()
-  .subscribe(res => {
-    if (res === 'refresh') {
-      this.cargarEmpresas(); // Recargar tabla
-    }
-  });
-}
-
-//registro 
-openDialog(): void {
-  this.dialog.open(ModalEmpresa, {
-    width: '750px',
-    data: null
-  })
-  .afterClosed()
-  .subscribe(res => {
-    if (res === 'refresh') {
-      this.cargarEmpresas();
-    }
-  });
-}
-  //Para ver el area
-  constructor(private router: Router) { }
-  verAreas() {
-    // Simulación → Navegación simple
-    this.router.navigate(['/area']);
+    this.dialog.open(ModalEmpresa, {
+      width: '750px',
+      data: emp
+    })
+      .afterClosed()
+      .subscribe(res => {
+        if (res === 'refresh') {
+          this.cargarEmpresas(); // Recargar tabla
+        }
+      });
   }
+
+  eliminar(id: number) {
+    this.empresaService.eliminar(id).subscribe({
+      next: (resp) => {
+        console.log("Respuesta backend:", resp);
+
+        // Recargar lista
+        this.cargarEmpresas();
+
+        // Mensaje opcional
+        console.log(`Empresa ${id} eliminada`);
+      },
+      error: (err) => {
+        console.error("Error al eliminar:", err);
+      }
+    });
+  }
+
+
+  //registro 
+  openDialog(): void {
+    this.dialog.open(ModalEmpresa, {
+      width: '750px',
+      data: null
+    })
+      .afterClosed()
+      .subscribe(res => {
+        if (res === 'refresh') {
+          this.cargarEmpresas();
+        }
+      });
+  }
+  //Para ver el area
+  router = inject( Router)
+  verAreas(idEmpresa: number) {
+  this.router.navigate(['/area', idEmpresa]);
+}
 }

@@ -24,7 +24,7 @@ export const routes: Routes = [
       {path: "empresa", component: Empresa, title: 'Empresa | App-Empresa'},
       {path: "usuario", component: Usuario, title: 'Usuario | App-Usuario'},
       {path: "empleado", component: Empleado, title: 'Empleado | App-Empleado'},
-      {path: "area", component: Area, title: 'Area | App-Area'},
+      {path: "area/:empresaId", component: Area, title: 'Area | App-Area'},
       {path: "cargo", component: Cargo, title: 'Cargo | App-Cargo'},
       {path: "horario", component: Horario, title: 'Horario | App-Horario'},
       {path: "asistencia", component: Asistencia, title: 'Asistencia | App-Asistencia'},

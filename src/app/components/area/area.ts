@@ -9,7 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ModalArea } from '../modales/modal-area/modal-area';
 
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AreaInterface } from '../../services/area/area.interface';
+import { AreaService } from '../../services/area/area';
 @Component({
   selector: 'app-area',
   imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule],
@@ -17,56 +19,67 @@ import { Router } from '@angular/router';
   styleUrl: './area.css',
 })
 export class Area {
+  empresaId!: number;
+  areas: AreaInterface[] = [];
+
+
+
   busqueda = '';
-  //datos de la tabla
-  columns: string[] = [
-    'id',
-    'nombre',
-    'estado',
-    'fecha',
-    'acciones',
-  ];
+  dataArea = new MatTableDataSource<AreaInterface>([]);
+  dataOriginal: AreaInterface[] = [];
+  columns: string[] = ['id', 'nombre', 'estado', 'fecha_creacion', 'nombre_empresa', 'acciones'];
 
-  dataArea = new MatTableDataSource([
-    {
-      id: 1,
-      nombre: 'RR.HH',
-      estado: 'Activo',
-      fecha: '21/11/2025'
-      
-    },
-    {
-      id: 2,
-      nombre: 'Ventas',
-      estado: 'Inactivo',
-      fecha: '19/11/2025'
-    }
-  ]);
+  private route = inject(ActivatedRoute);
+  private areaService = inject(AreaService);
 
+  ngOnInit() {
+    this.empresaId = Number(this.route.snapshot.paramMap.get('empresaId'));
+    this.cargarAreas();
+  }
 
-  dataOriginal = [...this.dataArea.data]; // para el buscador
+  cargarAreas() {
+    this.areaService.getAreasByEmpresa(this.empresaId).subscribe({
+      next: (resp) => {
+        this.areas = resp;
+        this.dataOriginal = resp;       // Para filtrar
+        this.dataArea.data = resp;      // Esto llena la tabla
+      },
+      error: (err) => console.error('Error cargando áreas:', err)
+    });
+  }
+
 
   filtrar() {
     const texto = this.busqueda.trim().toLowerCase();
-
-    this.dataArea.data = this.dataOriginal.filter(e =>
-      e.nombre.toLowerCase().includes(texto)
+    this.dataArea.data = this.dataOriginal.filter(a =>
+      a.nombre.toLowerCase().includes(texto)
     );
   }
-  //Habrir modal
-  readonly dialog = inject(MatDialog);
-  openDialog(): void {
+  private dialog = inject(MatDialog);
+
+  openDialog(area?: AreaInterface) {
     this.dialog.open(ModalArea, {
-      width: '750px',
-      height: 'auto',     // o '600px' si quieres fijo
-      maxWidth: '80vw',   // PARA QUE NO SE ROMPA EN PANTALLAS PEQUEÑAS
-      disableClose: false // opcional
+      width: '500px',
+      data: area ? area : { empresaId: this.empresaId }  // si no hay data, es creación
+    }).afterClosed().subscribe(res => {
+      if (res === 'refresh') this.cargarAreas(); // refresca la tabla
     });
   }
-  router = inject(Router);
+  //eliminar 
+  eliminarArea(id: number) {
+  if (!confirm('¿Seguro que quieres eliminar esta área?')) return;
 
+  this.areaService.deleteArea(id).subscribe({
+    next: () => this.cargarAreas(),  // refresca la tabla
+    error: (err) => console.error('Error eliminando área', err)
+  });
+}
+
+
+
+  router = inject(Router);
   //Boton de volver 
   volver() {
-  this.router.navigate(['/empresa']);
-}
+    this.router.navigate(['/empresa']);
+  }
 }
