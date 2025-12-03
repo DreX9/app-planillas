@@ -60,20 +60,22 @@ export class Area {
   openDialog(area?: AreaInterface) {
     this.dialog.open(ModalArea, {
       width: '500px',
-      data: area ? area : { empresaId: this.empresaId }  // si no hay data, es creación
+      data: area
+        ? { ...area, empresaId: this.empresaId }   // aquí FIX
+        : { empresaId: this.empresaId }
     }).afterClosed().subscribe(res => {
-      if (res === 'refresh') this.cargarAreas(); // refresca la tabla
+      if (res === 'refresh') this.cargarAreas();
     });
   }
   //eliminar 
   eliminarArea(id: number) {
-  if (!confirm('¿Seguro que quieres eliminar esta área?')) return;
+    if (!confirm('¿Seguro que quieres eliminar esta área?')) return;
 
-  this.areaService.deleteArea(id).subscribe({
-    next: () => this.cargarAreas(),  // refresca la tabla
-    error: (err) => console.error('Error eliminando área', err)
-  });
-}
+    this.areaService.deleteArea(id).subscribe({
+      next: () => this.cargarAreas(),  // refresca la tabla
+      error: (err) => console.error('Error eliminando área', err)
+    });
+  }
 
 
 

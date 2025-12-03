@@ -10,6 +10,11 @@ import { AreaInterface } from './area.interface';
 export class AreaService {
   private http = inject(HttpClient);
   private URL = `${environment.apiURL}/area`;
+
+  list(): Observable<AreaInterface[]> {
+  return this.http.get<AreaInterface[]>(this.URL);
+}
+
   getAreasByEmpresa(empresaId: number): Observable<AreaInterface[]> {
     return this.http.get<AreaInterface[]>(`${this.URL}/empresa/${empresaId}`);
   }

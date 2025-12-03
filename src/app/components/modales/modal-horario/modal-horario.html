@@ -12,12 +12,25 @@
 
         <mat-form-field class="span-6">
             <mat-label>Turno</mat-label>
-            <input matInput [(ngModel)]="horario.turno" placeholder="Ej: Mañana">
+            <mat-select [(ngModel)]="form.turnos">
+                <mat-option value="Mañana">Mañana</mat-option>
+                <mat-option value="Tarde">Tarde</mat-option>
+                <mat-option value="Noche">Noche</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Días laborales</mat-label>
+            <mat-select [(ngModel)]="form.dias">
+                <mat-option value="Lunes a Viernes">Lunes a Viernes</mat-option>
+                <mat-option value="Lunes a Sábado">Lunes a Sábado</mat-option>
+                <mat-option value="Lunes a Domingo">Lunes a Domingo</mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field class="span-3">
             <mat-label>Hora Entrada</mat-label>
-            <mat-select [(ngModel)]="horario.entrada">
+            <mat-select [(ngModel)]="form.hora_entrada">
                 <mat-option value="08:00">08:00</mat-option>
                 <mat-option value="08:30">08:30</mat-option>
 
@@ -36,7 +49,7 @@
 
         <mat-form-field class="span-3">
             <mat-label>Hora Salida</mat-label>
-            <mat-select [(ngModel)]="horario.salida">
+            <mat-select [(ngModel)]="form.hora_salida">
                 <mat-option value="16:00">16:00</mat-option>
                 <mat-option value="16:30">16:30</mat-option>
 
@@ -53,42 +66,25 @@
             </mat-select>
         </mat-form-field>
 
-
         <!-- <div class="span-12" style="margin-top: 10px;">
-            <h4 class="label-radio">Hora de salida</h4>
-            <mat-radio-group aria-label="Seleccione Los dias laborables">
-                <mat-radio-button value="1">Lunes</mat-radio-button>
-                <mat-radio-button value="2">Martes</mat-radio-button>
-                <mat-radio-button value="3">Miercoles</mat-radio-button>
-                <mat-radio-button value="4">Jueves</mat-radio-button>
-                <mat-radio-button value="5">Viernes</mat-radio-button>
-                <mat-radio-button value="6">Sabado</mat-radio-button>
-                <mat-radio-button value="7">Domingo</mat-radio-button>
-            </mat-radio-group>
-
-
-        </div> -->
-        <div class="span-12" style="margin-top: 10px;">
-            <h4 class="label-radio">Dias laborables</h4>
+            <h4 class="label-radio">Días laborables</h4>
             <div class="grid-12">
-                <mat-checkbox [checked]="check" class="span-3">Lunes</mat-checkbox>
-                <mat-checkbox [checked]="check" class="span-3">Martes</mat-checkbox>
-                <mat-checkbox [checked]="check" class="span-3">Miércoles</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.lunes" class="span-3">Lunes</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.martes" class="span-3">Martes</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.miercoles" class="span-3">Miércoles</mat-checkbox>
 
-                <mat-checkbox [checked]="check" class="span-3">Jueves</mat-checkbox>
-                <mat-checkbox [checked]="check" class="span-3">Viernes</mat-checkbox>
-                <mat-checkbox [checked]="check" class="span-3">Sábado</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.jueves" class="span-3">Jueves</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.viernes" class="span-3">Viernes</mat-checkbox>
+                <mat-checkbox [(ngModel)]="form.dias.sabado" class="span-3">Sábado</mat-checkbox>
             </div>
-
-
-        </div>
+        </div> -->
 
     </div>
 
 </mat-dialog-content>
 
 <mat-dialog-actions style="margin-bottom: 30px;">
-    <button mat-raised-button class="btn-save" style="margin-left: 18px;">
+    <button mat-raised-button class="btn-save" style="margin-left: 18px;" (click)="guardar()">
         Guardar
     </button>
 </mat-dialog-actions>
