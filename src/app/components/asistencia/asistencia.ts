@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ModalAsistencia } from '../modales/modal-asistencia/modal-asistencia';
+import { AsistenciaView } from '../../services/asistencia/asistencia-view.interface';
+import { AsistenciaService } from '../../services/asistencia/asistencia';
 @Component({
   selector: 'app-asistencia',
   imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule],
@@ -16,54 +18,72 @@ import { ModalAsistencia } from '../modales/modal-asistencia/modal-asistencia';
 })
 export class Asistencia {
   busqueda = '';
-  //datos de la tabla
-  columns: string[] = [
-    'id',
-    'nombre',
-    'fecha',
-    'entrada',
-    'salida',
-    'estado',
-    'acciones'
-  ];
 
-  dataAsistencia = new MatTableDataSource([
-    {
-      id: 1,
-      nombre: 'Juan Perez',
-      fecha: '21/11/2025',
-      entrada: '08:00',
-      salida: '17:00',
-      estado: 'Puntual'
-    },
-    {
-      id: 2,
-      nombre: 'Pablo Augusto',
-      fecha: '19/11/2025',
-      entrada: '09:00',
-      salida: '18:00',
-      estado: 'Falta'
-    }
-  ]);
+  // Columnas de la tabla
+  columns: string[] = ['id', 'empleado', 'fecha', 'entrada', 'salida', 'estado', 'descripcion', 'acciones'];
 
+  // MatTableDataSource
+  dataAsistencia = new MatTableDataSource<AsistenciaView>([]);
+  dataOriginal: AsistenciaView[] = [];
 
-  dataOriginal = [...this.dataAsistencia.data]; // para el buscador
+  // Inyección de servicios
+  private dialog = inject(MatDialog);
+  private asistenciaService = inject(AsistenciaService);
 
-  filtrar() {
-    const texto = this.busqueda.trim().toLowerCase();
-
-    this.dataAsistencia.data = this.dataOriginal.filter(e =>
-      e.nombre.toLowerCase().includes(texto)
-    );
+  ngOnInit(): void {
+    this.cargarAsistencias();
   }
-  //Habrir modal
-  readonly dialog = inject(MatDialog);
-  openDialog(): void {
-    this.dialog.open(ModalAsistencia, {
-      width: '750px',
-      height: 'auto',     // o '600px' si quieres fijo
-      maxWidth: '80vw',   // PARA QUE NO SE ROMPA EN PANTALLAS PEQUEÑAS
-      disableClose: false // opcional
+
+  // Cargar datos desde backend
+  cargarAsistencias(): void {
+    this.asistenciaService.getAll().subscribe({
+      next: (data) => {
+        this.dataOriginal = data;
+        this.dataAsistencia.data = data;
+      },
+      error: (err) => console.error('Error al cargar asistencias', err),
     });
   }
+
+  // Filtrar por nombre de empleado
+  filtrar(): void {
+    const texto = this.busqueda.trim().toLowerCase();
+    this.dataAsistencia.data = this.dataOriginal.filter(e =>
+      e.empleado_nombre.toLowerCase().includes(texto)
+    );
+  }
+
+  // Abrir modal de registro o edición
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalAsistencia, {
+      width: '750px',
+      height: 'auto',
+      maxWidth: '80vw',
+      disableClose: false,
+    });
+
+    // Cuando se cierra el modal, recargar la tabla
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'reload') {
+        this.cargarAsistencias();
+      }
+    });
+  }
+
+  eliminarAsistencia(id: number): void {
+    if (!confirm('¿Está seguro de eliminar esta asistencia?')) return;
+
+    this.asistenciaService.eliminar(id).subscribe({
+      next: () => {
+        alert('Asistencia eliminada');
+        this.cargarAsistencias(); // recargar tabla
+      },
+      error: (err) => {
+        console.error('Error al eliminar asistencia', err);
+        alert('No se pudo eliminar la asistencia');
+      }
+    });
+  }
+
+
 }

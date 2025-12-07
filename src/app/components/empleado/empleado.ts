@@ -17,16 +17,23 @@ import { EmpleadoViewInterface } from '../../services/empleado/empleado-view.int
   styleUrl: './empleado.css',
 })
 export class Empleado {
- busqueda = '';
+  busqueda = '';
 
   // Columnas que se muestran en la tabla
   columns: string[] = [
-     'id',
+    'id',
     'nombre',
     'apellido',
-    'cargo',
-    'area',
-    'horario',
+    'telefono',
+    'correo',
+    'tipo_documento',
+    'numero_documento',
+    'fecha_contratacion',
+    'estado',
+    'salario_base',
+    'nombre_rol',
+    'nombre_area',
+    'turno_horario',
     'acciones'
   ];
 
@@ -35,14 +42,13 @@ export class Empleado {
 
   private empleadoService = inject(EmpleadoService);
 
-  // Abrir modal
   readonly dialog = inject(MatDialog);
 
   constructor() {
     this.cargarEmpleados();
   }
 
-  // CARGA REAL DESDE EL BACKEND
+  // CARGA REAL DESDE BACKEND
   cargarEmpleados() {
     this.empleadoService.list().subscribe({
       next: (res) => {
@@ -52,7 +58,7 @@ export class Empleado {
     });
   }
 
-  // BUSCADOR LOCAL
+  // FILTRAR POR NOMBRE O APELLIDO
   filtrar() {
     const texto = this.busqueda.trim().toLowerCase();
     this.dataEmpleado.data = this.dataOriginal.filter(e =>
@@ -61,19 +67,39 @@ export class Empleado {
     );
   }
 
+  // ABRIR MODAL PARA CREAR
   openDialog() {
     const dialogRef = this.dialog.open(ModalEmpleado, {
       width: '750px',
-      height: 'auto',
-      maxWidth: '80vw'
+      data: null, // <-- creación
     });
 
-    // CUANDO EL MODAL SE CIERRA, REFRESCAMOS LA TABLA
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.cargarEmpleados();
-      }
+      if (result) this.cargarEmpleados();
     });
   }
+
+  // ABRIR MODAL PARA EDITAR
+  editarEmpleado(emp: EmpleadoViewInterface) {
+    const dialogRef = this.dialog.open(ModalEmpleado, {
+      width: '750px',
+      data: emp  // <-- se envía el empleado completo
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.cargarEmpleados();
+    });
+  }
+
+  // ELIMINAR EMPLEADO
+  eliminarEmpleado(id: number) {
+    if (!confirm("¿Seguro que deseas eliminar este empleado?")) return;
+
+    this.empleadoService.delete(id).subscribe({
+      next: () => this.cargarEmpleados(),
+      error: (err) => console.error("Error al eliminar", err)
+    });
+  }
+
 
 }

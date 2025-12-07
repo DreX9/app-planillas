@@ -3,22 +3,66 @@
 </button>
 
 <h2 mat-dialog-title>Registrar Empleado</h2>
-
+<p>{{ empresas.length }}</p>
 <mat-dialog-content>
 
     <h3>Datos del empleado</h3>
 
-    
     <!-- Nombre + Apellido -->
     <div class="grid-12">
         <mat-form-field class="span-6">
             <mat-label>Nombre</mat-label>
-            <input matInput [(ngModel)]="empleado.nombre">
+            <input matInput [(ngModel)]="empleado.nombre" />
         </mat-form-field>
 
         <mat-form-field class="span-6">
             <mat-label>Apellido</mat-label>
-            <input matInput [(ngModel)]="empleado.apellido">
+            <input matInput [(ngModel)]="empleado.apellido" />
+        </mat-form-field>
+    </div>
+
+    <!-- Documento -->
+    <div class="grid-12">
+        <mat-form-field class="span-4">
+            <mat-label>Tipo Documento</mat-label>
+            <mat-select [(ngModel)]="empleado.tipo_documento">
+                <mat-option value="DNI">DNI</mat-option>
+                <mat-option value="PASAPORTE">PASAPORTE</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="span-8">
+            <mat-label>N° Documento</mat-label>
+            <input matInput [(ngModel)]="empleado.numero_documento" />
+        </mat-form-field>
+    </div>
+
+    <!-- Correo + Teléfono -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Correo</mat-label>
+            <input matInput [(ngModel)]="empleado.correo" />
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Teléfono</mat-label>
+            <input matInput [(ngModel)]="empleado.telefono" />
+        </mat-form-field>
+    </div>
+
+    <!-- Salario + Estado -->
+    <div class="grid-12">
+        <mat-form-field class="span-6">
+            <mat-label>Salario Base</mat-label>
+            <input matInput type="number" [(ngModel)]="empleado.salario_base" />
+        </mat-form-field>
+
+        <mat-form-field class="span-6">
+            <mat-label>Estado</mat-label>
+            <mat-select [(ngModel)]="empleado.estado">
+                <mat-option value="ACTIVO">Activo</mat-option>
+                <mat-option value="INACTIVO">Inactivo</mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
 
@@ -46,13 +90,25 @@
             <mat-label>Horario</mat-label>
             <mat-select [(ngModel)]="empleado.horarioId">
                 <mat-option *ngFor="let h of horarios" [value]="h.id">
-                    {{ h.turno }}
+                    {{ h.turnos }}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
 
-    
+    <!-- Rol -->
+    <div class="grid-12">
+        <mat-form-field class="span-4">
+            <mat-label>Rol</mat-label>
+            <mat-select [(ngModel)]="empleado.rolId">
+                <mat-option *ngFor="let r of roles" [value]="r.id">
+                    {{ r.nombre }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+
 
 </mat-dialog-content>
 

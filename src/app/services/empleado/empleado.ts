@@ -35,4 +35,8 @@ export class EmpleadoService {
     return this.http.delete(`${this.URL}/${id}`, { responseType: 'text' });
   }
 
+   // NUEVO: Buscar empleados por nombre o DNI
+  buscar(texto: string) {
+    return this.http.get<EmpleadoViewInterface[]>(`${this.URL}/buscar?texto=${texto}`);
+  }
 }

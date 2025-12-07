@@ -1,13 +1,7 @@
 <h1 mat-dialog-title>Empleados</h1>
 
 <div class="acciones">
-  <input
-    class="input-buscar"
-    type="text"
-    placeholder="Buscar..."
-    [(ngModel)]="busqueda"
-    (input)="filtrar()"
-  />
+  <input class="input-buscar" type="text" placeholder="Buscar..." [(ngModel)]="busqueda" (input)="filtrar()" />
 
   <button mat-raised-button class="btn-save" style="margin: 20px;" (click)="openDialog()">
     Registrar
@@ -19,52 +13,98 @@
 
     <!-- ID -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.id }} </td>
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let e">{{ e.id }}</td>
     </ng-container>
 
     <!-- Nombre -->
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.nombre }} </td>
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let e">{{ e.nombre }}</td>
     </ng-container>
 
     <!-- Apellido -->
     <ng-container matColumnDef="apellido">
-      <th mat-header-cell *matHeaderCellDef> Apellido </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.apellido }} </td>
+      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+      <td mat-cell *matCellDef="let e">{{ e.apellido }}</td>
     </ng-container>
 
-    <!-- Cargo -->
-    <ng-container matColumnDef="cargo">
-      <th mat-header-cell *matHeaderCellDef> Cargo </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.cargo }} </td>
+    <!-- Teléfono -->
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+      <td mat-cell *matCellDef="let e">{{ e.telefono }}</td>
     </ng-container>
 
-    <!-- Área -->
-    <ng-container matColumnDef="area">
-      <th mat-header-cell *matHeaderCellDef> Área </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.area }} </td>
+    <!-- Correo -->
+    <ng-container matColumnDef="correo">
+      <th mat-header-cell *matHeaderCellDef>Correo</th>
+      <td mat-cell *matCellDef="let e">{{ e.correo }}</td>
     </ng-container>
 
-    <!-- Horario -->
-    <ng-container matColumnDef="horario">
-      <th mat-header-cell *matHeaderCellDef> Horario </th>
-      <td mat-cell *matCellDef="let emp"> {{ emp.horario }} </td>
+    <!-- Tipo Documento -->
+    <ng-container matColumnDef="tipo_documento">
+      <th mat-header-cell *matHeaderCellDef>Tipo Doc.</th>
+      <td mat-cell *matCellDef="let e">{{ e.tipo_documento }}</td>
     </ng-container>
 
-   
+    <!-- Número Documento -->
+    <ng-container matColumnDef="numero_documento">
+      <th mat-header-cell *matHeaderCellDef>N° Documento</th>
+      <td mat-cell *matCellDef="let e">{{ e.numero_documento }}</td>
+    </ng-container>
+
+    <!-- Fecha Contratación -->
+    <ng-container matColumnDef="fecha_contratacion">
+      <th mat-header-cell *matHeaderCellDef>Contratación</th>
+      <td mat-cell *matCellDef="let e">{{ e.fecha_contratacion }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let e">
+        <span [class.activo]="e.estado === 'ACTIVO'" [class.inactivo]="e.estado === 'INACTIVO'">
+          {{ e.estado }}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Salario Base -->
+    <ng-container matColumnDef="salario_base">
+      <th mat-header-cell *matHeaderCellDef>Salario Base</th>
+      <td mat-cell *matCellDef="let e">S/ {{ e.salario_base }}</td>
+    </ng-container>
+
+    <!-- Nombre Rol -->
+    <ng-container matColumnDef="nombre_rol">
+      <th mat-header-cell *matHeaderCellDef>Rol</th>
+      <td mat-cell *matCellDef="let e">{{ e.nombre_rol }}</td>
+    </ng-container>
+
+    <!-- Nombre Área -->
+    <ng-container matColumnDef="nombre_area">
+      <th mat-header-cell *matHeaderCellDef>Área</th>
+      <td mat-cell *matCellDef="let e">{{ e.nombre_area }}</td>
+    </ng-container>
+
+    <!-- Turno Horario -->
+    <ng-container matColumnDef="turno_horario">
+      <th mat-header-cell *matHeaderCellDef>Horario</th>
+      <td mat-cell *matCellDef="let e">{{ e.turno_horario }}</td>
+    </ng-container>
+
+
 
     <!-- Acciones -->
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let emp" class="acciones-cell">
 
-        <button mat-icon-button class="btn-update">
+        <button mat-icon-button class="btn-update" (click)="editarEmpleado(emp)">
           <mat-icon fontIcon="edit"></mat-icon>
         </button>
 
-        <button mat-icon-button class="btn-delete">
+        <button mat-icon-button class="btn-delete" (click)="eliminarEmpleado(emp.id)">
           <mat-icon fontIcon="delete"></mat-icon>
         </button>
 

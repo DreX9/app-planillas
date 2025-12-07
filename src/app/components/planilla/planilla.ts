@@ -10,83 +10,85 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PlanillaService } from '../../services/planilla/planilla';
+import { PlanillaInterface } from '../../services/planilla/planilla.interface';
 @Component({
   selector: 'app-planilla',
-  imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule,CommonModule, MatDatepickerModule, MatNativeDateModule ],
+  imports: [MatTableModule, FormsModule, MatButtonModule, MatInputModule, MatIconModule, CommonModule, MatDatepickerModule, MatNativeDateModule],
   templateUrl: './planilla.html',
   styleUrl: './planilla.css',
 })
 export class Planilla {
-  busqueda = '';
-  //datos de la tabla
-  columns: string[] = [
-    'id',
-    'nombre',
-    'cargo',
-    'periodo',
-    'dias',
-    'sueldo',
-    'estado',
-    'acciones'
+  private planillaService = inject(PlanillaService);
+
+  // ⬇⬇⬇  ESTA ES LA DIFERENCIA IMPORTANTE
+  dataSource = new MatTableDataSource<PlanillaInterface>([]);
+
+  displayedColumns = [
+    'id', 'empleado', 'periodo', 'dias_trab', 'sueldo_base',
+    'descuentos', 'neto', 'estado', 'acciones'
   ];
 
-  dataPlanilla = new MatTableDataSource([
-    {
-      id: 1,
-      nombre: 'Juan Pérez',
-      cargo: 'Administrador de Sistemas',
-      periodo: 'Noviembre 2025',
-      dias: 26,
-      sueldo: 3200.00,
-      estado: 'Activo'
-    },
-    {
-      id: 2,
-      nombre: 'María López',
-      cargo: 'Asistente de Recursos Humanos',
-      periodo: 'Noviembre 2025',
-      dias: 24,
-      sueldo: 2400.00,
-      estado: 'Activo'
-    },
-    {
-      id: 3,
-      nombre: 'Carlos Ramos',
-      cargo: 'Vendedor Senior',
-      periodo: 'Noviembre 2025',
-      dias: 22,
-      sueldo: 2800.00,
-      estado: 'Activo'
-    },
-    {
-      id: 4,
-      nombre: 'Ana Castillo',
-      cargo: 'Contadora General',
-      periodo: 'Noviembre 2025',
-      dias: 25,
-      sueldo: 3500.00,
-      estado: 'Inactivo'
-    },
-    {
-      id: 5,
-      nombre: 'Luis Fernández',
-      cargo: 'Operario de Almacén',
-      periodo: 'Noviembre 2025',
-      dias: 20,
-      sueldo: 1800.00,
-      estado: 'Activo'
-    }
-  ]);
+  mesSeleccionado!: number;
+  anioSeleccionado!: number;
+  empleadoId!: number;
 
+  meses = [
+    { num: 1, nombre: 'Enero' }, { num: 2, nombre: 'Febrero' },
+    { num: 3, nombre: 'Marzo' }, { num: 4, nombre: 'Abril' },
+    { num: 5, nombre: 'Mayo' }, { num: 6, nombre: 'Junio' },
+    { num: 7, nombre: 'Julio' }, { num: 8, nombre: 'Agosto' },
+    { num: 9, nombre: 'Septiembre' }, { num: 10, nombre: 'Octubre' },
+    { num: 11, nombre: 'Noviembre' }, { num: 12, nombre: 'Diciembre' },
+  ];
 
-  dataOriginal = [...this.dataPlanilla.data]; // para el buscador
+  anios = [2023, 2024, 2025, 2026];
 
-  filtrar() {
-    const texto = this.busqueda.trim().toLowerCase();
+  ngOnInit() { this.listar(); }
 
-    this.dataPlanilla.data = this.dataOriginal.filter(e =>
-      e.nombre.toLowerCase().includes(texto)
-    );
+  listar() {
+    this.planillaService.getAll().subscribe(data => {
+      this.dataSource.data = data; // ⬅ refresca instantáneamente
+    });
   }
-  
+
+  generar() {
+    if (!this.empleadoId || !this.mesSeleccionado || !this.anioSeleccionado) {
+      alert("Completa los datos");
+      return;
+    }
+
+    this.planillaService
+      .generar(this.empleadoId, this.mesSeleccionado, this.anioSeleccionado)
+      .subscribe(() => this.listar());
+  }
+
+  generarMasivo() {
+    if (!this.mesSeleccionado || !this.anioSeleccionado) {
+      alert("Seleccione mes y año");
+      return;
+    }
+
+    this.planillaService
+      .generarMasivo(this.mesSeleccionado, this.anioSeleccionado)
+      .subscribe(msg => {
+        alert(msg);
+        this.listar();
+      });
+  }
+
+  cambiarEstado(item: PlanillaInterface, nuevoEstado: string) {
+    this.planillaService
+      .cambiarEstado(item.id, nuevoEstado)
+      .subscribe(() => this.listar());
+  }
+
+  descargarBoleta(id: number) {
+  this.planillaService.descargarBoleta(id)
+    .subscribe((pdf: Blob) => {
+      const url = window.URL.createObjectURL(pdf);
+      window.open(url, "_blank");
+    });
+}
+
 }
